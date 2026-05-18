@@ -4,7 +4,7 @@
 # provides callable functions for Anvil Webapp
 # this is now in a github repository https://github.com/Berkshire-Archaeological-Society/anii-r2-server.git
 ##
-# Version 082
+# Version 084
 ##
 # Author: Tony Bakker
 ##
@@ -137,7 +137,7 @@ def table_update(table_name,table):
       msg = table_name + " " + table_name_id + " " + row[table_name_id] + " update to database failed: " + msg
       logmsg("ERROR", msg)
     message = message + msg + "\n"
-
+  
   return message
 
 def table_insert(table_name,table):
@@ -149,7 +149,7 @@ def table_insert(table_name,table):
   conn.ping(reconnect=True)
   table.replace({np.nan: None},inplace=True)
   table.replace(r'^\s+$', None, regex=True,inplace=True)
-
+  
   if table_name == "siteuserrole":
     # special case for siteuserrole table
     # set table_name_id to Email and make Email Column values all lowercase
@@ -161,7 +161,7 @@ def table_insert(table_name,table):
   else:
     # all other tables will have the table_name_id set to "<table_name>Id"
     table_name_id = table_name.capitalize() + "Id"
-
+  
   cols = "`,`".join([str(i) for i in table.columns.tolist()])
 
   cur = conn.cursor()
@@ -186,11 +186,11 @@ def table_insert(table_name,table):
     logmsg("DEBUG",sql_cmd)
     logmsg("DEBUG",list(row.values()))
     try:
-      ret = cur.execute(sql_cmd,list(row.values()))
-      logmsg("DEBUG",ret)
-      conn.commit()
-      msg = "OK. " + table_name + " " + table_name_id + " " + row[table_name_id] + " successfully inserted."
-      logmsg("INFO",msg)
+       ret = cur.execute(sql_cmd,list(row.values()))
+       logmsg("DEBUG",ret)
+       conn.commit()
+       msg = "OK. " + table_name + " " + table_name_id + " " + row[table_name_id] + " successfully inserted."
+       logmsg("INFO",msg)
     except pymysql.Error as err:
       msg = format(err)
       msg = table_name + " " + table_name_id + " " + row[table_name_id] + " insert to database failed: " + msg
@@ -641,6 +641,7 @@ def table_get(site_id,table_name):
     # use python sorted and str.casefold() method to make sure the sort is case-insensitive (anvil uses Postgress methos which is case-sensitive) 
     tmp_pd_list = app_tables.users.search()
     pd_list = sorted(tmp_pd_list, key=lambda x: (x['lastname'].casefold(), x['initials'].casefold()))
+    logmsg("INFO",pd_list)
   else:
     # getting data from a DB table
     table_info = describe_table(table_name)
@@ -1556,4 +1557,3 @@ logmsg('INFO',msg)
 # Now wait for calls from frontend (browser)
 
 #anvil.server.wait_forever() # to be commented out when running in Server Module
-
