@@ -77,8 +77,8 @@ dependencies:
 - dep_id: dep_u7h63wh2m50rm
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.6.1}
-metadata: {logo_img: 'asset:logo.png', title: anii_r2}
-name: Clone of anii_r2
+metadata: {logo_img: 'asset:logo.png', title: anii_r2_v043}
+name: anii_r2_v043
 native_deps:
   head_html: |-
     <script>
@@ -88,7 +88,7 @@ native_deps:
       }
 
     </script>
-package_name: anii_r2_v033
+package_name: anii_r2_v043
 renamed: true
 runtime_options:
   client_version: '3'

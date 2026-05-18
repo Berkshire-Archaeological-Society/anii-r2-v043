@@ -1,3 +1,4 @@
+import anvil.server
 class Validator():
   """
 A Validator instance performs form validation. You give it
