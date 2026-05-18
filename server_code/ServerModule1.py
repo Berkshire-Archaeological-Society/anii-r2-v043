@@ -191,7 +191,7 @@ def table_insert(table_name,table):
       conn.commit()
       msg = "OK. " + table_name + " " + table_name_id + " " + row[table_name_id] + " successfully inserted."
       logmsg("INFO",msg)
-      except pymysql.Error as err:
+    except pymysql.Error as err:
       msg = format(err)
       msg = table_name + " " + table_name_id + " " + row[table_name_id] + " insert to database failed: " + msg
       logmsg("ERROR", msg)
